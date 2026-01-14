@@ -187,7 +187,7 @@ jobs:
         sed -i 's/put_task_struct(tsk)/put_task_stack(tsk)/g' drivers/kernelsu/allowlist.c || true
         sed -i 's/atomic_set(\&current->seccomp.filter_count, 0);//g' drivers/kernelsu/app_profile.c || true
         sed -i 's|#include <linux/pgtable.h>|#include <asm/pgtable.h>|g' drivers/kernelsu/sucompat.c || true
-
+        sed -i 's/strncpy_from_user_nofault/strncpy_from_user/g' drivers/kernelsu/sucompat.c || true
 
     - name: Build kernel
       run: |
