@@ -179,12 +179,6 @@ jobs:
         key: build-kernel-${{ env.DEVICE }}${{ env.UPLOADNAME }}
         max-size: 2G
         
-    - name: Fix KernelSU allowlist
-      if: env.ENABLE_KERNELSU == 'true'
-      run: |
-          cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-          sed -i 's/task_work_add(tsk, cb, TWA_RESUME)/task_work_add(tsk, cb, true)/g' drivers/kernelsu/allowlist.c
-          sed -i 's/put_task_struct(tsk)/put_task_stack(tsk)/g' drivers/kernelsu/allowlist.c || true
 
 
     - name: Build kernel
