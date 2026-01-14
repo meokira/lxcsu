@@ -178,6 +178,7 @@ jobs:
       with:
         key: build-kernel-${{ env.DEVICE }}${{ env.UPLOADNAME }}
         max-size: 2G
+        
     - name: Fix KernelSU sources
       if: env.ENABLE_KERNELSU == 'true'
       run: |
@@ -185,7 +186,7 @@ jobs:
         sed -i 's/task_work_add(tsk, cb, TWA_RESUME)/task_work_add(tsk, cb, true)/g' drivers/kernelsu/allowlist.c
         sed -i 's/put_task_struct(tsk)/put_task_stack(tsk)/g' drivers/kernelsu/allowlist.c || true
         sed -i 's/atomic_set(\&current->seccomp.filter_count, 0);//g' drivers/kernelsu/app_profile.c || true
-    
+        sed -i 's|#include <linux/pgtable.h>|#include <asm/pgtable.h>|g' drivers/kernelsu/sucompat.c || true
 
 
     - name: Build kernel
