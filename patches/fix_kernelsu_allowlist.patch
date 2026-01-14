@@ -1,0 +1,8 @@
+--- a/drivers/kernelsu/allowlist.c
++++ b/drivers/kernelsu/allowlist.c
+@@ -423,7 +423,7 @@
+-    task_work_add(tsk, cb, TWA_RESUME);
++    task_work_add(tsk, cb);
+@@ -426,7 +426,7 @@
+-    put_task_struct(tsk);
++    put_task_stack(tsk);
