@@ -178,6 +178,12 @@ jobs:
       with:
         key: build-kernel-${{ env.DEVICE }}${{ env.UPLOADNAME }}
         max-size: 2G
+        
+    - name: Apply KernelSU allowlist fix
+      if: env.ENABLE_KERNELSU == 'true'
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+        patch -p1 < $GITHUB_WORKSPACE/patches/fix_kernelsu_allowlist.patch
 
     - name: Build kernel
       run: |
