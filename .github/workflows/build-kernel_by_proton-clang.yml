@@ -179,21 +179,6 @@ jobs:
         key: build-kernel-${{ env.DEVICE }}${{ env.UPLOADNAME }}
         max-size: 2G
         
-    - name: Fix KernelSU sources
-      if: env.ENABLE_KERNELSU == 'true'
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        sed -i 's/task_work_add(tsk, cb, TWA_RESUME)/task_work_add(tsk, cb, true)/g' drivers/kernelsu/allowlist.c
-        sed -i 's/put_task_struct(tsk)/put_task_stack(tsk)/g' drivers/kernelsu/allowlist.c || true
-        sed -i 's/atomic_set(\&current->seccomp.filter_count, 0);//g' drivers/kernelsu/app_profile.c || true
-        sed -i 's|#include <linux/pgtable.h>|#include <asm/pgtable.h>|g' drivers/kernelsu/sucompat.c || true
-        sed -i 's/strncpy_from_user_nofault/strncpy_from_user/g' drivers/kernelsu/sucompat.c || true
-        sed -i 's/strncpy_from_user_nofault/strncpy_from_user/g' drivers/kernelsu/syscall_hook_manager.c || true
-        rm -f drivers/kernelsu/app_profile.c
-        rm -f drivers/kernelsu/pkg_observer.c
-
-        sed -i 's/app_profile.o//g' drivers/kernelsu/Makefile
-        sed -i 's/pkg_observer.o//g' drivers/kernelsu/Makefile
 
         
     - name: Build kernel
