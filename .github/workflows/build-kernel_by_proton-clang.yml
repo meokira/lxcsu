@@ -189,6 +189,7 @@ jobs:
         sed -i 's|#include <linux/pgtable.h>|#include <asm/pgtable.h>|g' drivers/kernelsu/sucompat.c || true
         sed -i 's/strncpy_from_user_nofault/strncpy_from_user/g' drivers/kernelsu/sucompat.c || true
         sed -i 's/strncpy_from_user_nofault/strncpy_from_user/g' drivers/kernelsu/syscall_hook_manager.c || true
+        sed -i 's/obj-y += pkg_observer.o/# obj-y += pkg_observer.o/g' drivers/kernelsu/Makefile
 
         
     - name: Build kernel
